@@ -13,21 +13,11 @@ class BowlingGameScore
     const SPARE = '/';
     const MISS = '-';
 
-    public static function scoreValue(string $score): int{
-        $scoreValues = [
-            self::STRIKE => 10,
-            self::SPARE => 5,
-            self::MISS => 0,
-        ];
-
-        return $scoreValues[$score];
-    }
-
-    public static function scoreMultiplier(string $score)
+    public static function scoreAdditionalPoint(string $score)
     {
         $scoreValues = [
-            self::STRIKE => 3,
-            self::SPARE => 2,
+            self::STRIKE => 30,
+            self::SPARE => 10,
             self::MISS => 0,
         ];
 

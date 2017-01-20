@@ -9,19 +9,18 @@ namespace SergioDeCandelario\BowlingKata;
  */
 class BowlingGame
 {
-    private $bowls;
-
-    private $multiplier;
-
     private $score;
+
+    private $sequence;
 
     /**
      * BowlingGame constructor.
+     *
+     * @param array $sequence
      */
-    public function __construct()
+    public function __construct(array $sequence)
     {
-        $this->bowls = 10;
-        $this->multiplier = 0;
+        $this->sequence = $sequence;
         $this->score = 0;
     }
 
@@ -30,18 +29,43 @@ class BowlingGame
         return $this->score;
     }
 
-    public function sumScoreFromSequence(array $sequence)
+    public function calculateScore()
     {
-        foreach ($sequence as $roll) {
+        $lastScore = 0;
+
+        echo(PHP_EOL);
+
+        foreach ($this->sequence as $turn => $roll) {
+            echo("SCORE: " . $this->score . PHP_EOL);
+            echo("L-SCORE: " . $lastScore . PHP_EOL);
+            echo("=====" . PHP_EOL);
+
             if (is_int($roll)) {
                 $this->score += $roll;
-                continue;
+                $lastScore = $roll;
             }
 
-            if (is_string($roll)) {
-                $value = BowlingGameScore::scoreValue($roll);
-                $multiplier = BowlingGameScore::scoreMultiplier($roll);
-                $this->score += $value * $multiplier;
+            if ($roll == BowlingGameScore::STRIKE) {
+                $this->score += 10;
+                $lastScore = 10;
+
+                if ($turn > 2) {
+                    $this->score += (10 * 2);
+                }
+            }
+
+            if ($roll == BowlingGameScore::SPARE) {
+                $this->score += 10 - $lastScore;
+
+                if ($turn > 1) {
+                    $this->score += $lastScore;
+                }
+
+                $lastScore = 10;
+            }
+
+            if ($roll == BowlingGameScore::MISS) {
+                $this->score += 0;
             }
         }
     }
