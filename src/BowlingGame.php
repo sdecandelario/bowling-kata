@@ -11,16 +11,16 @@ class BowlingGame
 {
     private $score;
 
-    private $sequence;
+    private $rolls;
 
     /**
      * BowlingGame constructor.
      *
-     * @param array $sequence
+     * @param array $rolls
      */
-    public function __construct(array $sequence)
+    public function __construct(array $rolls)
     {
-        $this->sequence = $sequence;
+        $this->rolls = $rolls;
         $this->score = 0;
     }
 
@@ -31,42 +31,33 @@ class BowlingGame
 
     public function calculateScore()
     {
-        $lastScore = 0;
+        $previousRoll = 0;
+        $additionalTurns = 0;
+        $launch = 1;
+        $totalRolls = count($this->rolls);
 
-        echo(PHP_EOL);
-
-        foreach ($this->sequence as $turn => $roll) {
-            echo("SCORE: " . $this->score . PHP_EOL);
-            echo("L-SCORE: " . $lastScore . PHP_EOL);
-            echo("=====" . PHP_EOL);
-
-            if (is_int($roll)) {
+        foreach ($this->rolls as $turn => $roll) {
+            if ($additionalTurns && $turn < ($totalRolls - $additionalTurns)) {
                 $this->score += $roll;
-                $lastScore = $roll;
+                $additionalTurns--;
             }
 
-            if ($roll == BowlingGameScore::STRIKE) {
-                $this->score += 10;
-                $lastScore = 10;
-
-                if ($turn > 2) {
-                    $this->score += (10 * 2);
-                }
+            if (($previousRoll + $roll == 10) && $launch == 2) {
+                $additionalTurns = 1;
             }
 
-            if ($roll == BowlingGameScore::SPARE) {
-                $this->score += 10 - $lastScore;
-
-                if ($turn > 1) {
-                    $this->score += $lastScore;
-                }
-
-                $lastScore = 10;
+            if ($roll == 10) {
+                $additionalTurns = 2;
             }
 
-            if ($roll == BowlingGameScore::MISS) {
-                $this->score += 0;
+            if (($roll == 10) || $launch == 2) {
+                $launch = 0;
             }
+
+            $previousRoll = $roll;
+            $launch++;
+
+            $this->score += $roll;
         }
     }
 }

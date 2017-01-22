@@ -4,7 +4,6 @@ namespace SergioDeCandelario\BowlingKata\Test;
 
 use PHPUnit\Framework\TestCase;
 use SergioDeCandelario\BowlingKata\BowlingGame;
-use SergioDeCandelario\BowlingKata\BowlingGameScore;
 
 /**
  * BowlingGameTest
@@ -14,10 +13,7 @@ use SergioDeCandelario\BowlingKata\BowlingGameScore;
 class BowlingGameTest extends TestCase
 {
 
-    /**
-     * @test
-     */
-    public function checkInitialStateTest()
+    public function testCheckInitialState()
     {
 
         $bowlingGame = new BowlingGame([]);
@@ -25,272 +21,81 @@ class BowlingGameTest extends TestCase
         $this->assertEquals(0, $bowlingGame->score());
     }
 
-    /**
-     * @test
-     */
-    public function scoreAllThree()
+    public function testAGutterGame()
     {
-        $sequence = [
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-            3,
-        ];
+        $rolls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-        $bowlingGame = new BowlingGame($sequence);
-
-        $bowlingGame->calculateScore();
-
-        $this->assertEquals(60, $bowlingGame->score());
-    }
-
-    /**
-     * @test
-     */
-    public function scoreAllStrikes()
-    {
-        $sequence = [
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
-
-        $bowlingGame->calculateScore();
-
-        $this->assertEquals(300, $bowlingGame->score());
-    }
-
-    /**
-     * @test
-     */
-    public function scoreHalfNineHalfMiss()
-    {
-        $sequence = [
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-            9,
-            BowlingGameScore::MISS,
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
-
-        $bowlingGame->calculateScore();
-
-        $this->assertEquals(90, $bowlingGame->score());
-    }
-
-    /**
-     * @test
-     */
-    public function scoreHalfFiveHalfSpare()
-    {
-
-        $sequence = [
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5,
-            BowlingGameScore::SPARE,
-            5
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
-
-        $bowlingGame->calculateScore();
-
-        $this->assertEquals(150, $bowlingGame->score());
-    }
-
-    /**
-     * @test
-     */
-    public function scoreHalfSevenHalfSpare()
-    {
-
-        $sequence = [
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7,
-            BowlingGameScore::SPARE,
-            7
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
-
-        $bowlingGame->calculateScore();
-
-        $this->assertEquals(170, $bowlingGame->score());
-    }
-
-    /**
-     * @test
-     */
-    public function scoreAllMiss()
-    {
-
-        $sequence = [
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-            BowlingGameScore::MISS,
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
+        $bowlingGame = new BowlingGame($rolls);
 
         $bowlingGame->calculateScore();
 
         $this->assertEquals(0, $bowlingGame->score());
     }
 
-    /**
-     * @test
-     */
-    public function scoreAllStrikesFiveAndSpare()
+    public function testANoSpareNoStrikesGame()
     {
+        $rolls = [1, 6, 4, 5, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-        $sequence = [
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            BowlingGameScore::STRIKE,
-            5,
-            BowlingGameScore::SPARE,
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
+        $bowlingGame = new BowlingGame($rolls);
 
         $bowlingGame->calculateScore();
 
-        $this->assertEquals(285, $bowlingGame->score());
+        $this->assertEquals(20, $bowlingGame->score());
     }
 
-    /**
-     * @test
-     */
-    public function scoreTwoAndOneStrikeSpareOneAndTwoUntilEnd()
+    public function testGameWithSpares()
     {
+        $rolls = [4, 6, 4, 5, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-        $sequence = [
-            2,
-            1,
-            BowlingGameScore::STRIKE,
-            7,
-            BowlingGameScore::SPARE,
-            1,
-            2,
-            1,
-            2,
-            1,
-            2,
-            1,
-            2,
-            1,
-            2,
-            1,
-            2,
-            1,
-            2,
-        ];
-
-        $bowlingGame = new BowlingGame($sequence);
+        $bowlingGame = new BowlingGame($rolls);
 
         $bowlingGame->calculateScore();
 
-        $this->assertEquals(55, $bowlingGame->score());
+        $this->assertEquals(27, $bowlingGame->score());
+    }
+
+    public function testGameWithStrikes()
+    {
+        $rolls = [10, 4, 5, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        $bowlingGame = new BowlingGame($rolls);
+
+        $bowlingGame->calculateScore();
+
+        $this->assertEquals(32, $bowlingGame->score());
+    }
+
+    public function testGameWithSpareIn10thFrame()
+    {
+        $rolls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 4, 2, 4, 6, 2];
+
+        $bowlingGame = new BowlingGame($rolls);
+
+        $bowlingGame->calculateScore();
+
+        $this->assertEquals(22, $bowlingGame->score());
+    }
+
+    public function testGameWithStrikeIn10thFrame()
+    {
+
+        $rolls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 4, 2, 10, 2, 3];
+
+        $bowlingGame = new BowlingGame($rolls);
+
+        $bowlingGame->calculateScore();
+
+        $this->assertEquals(25, $bowlingGame->score());
+    }
+
+    public function testAPrefectGame()
+    {
+        $rolls = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
+
+        $bowlingGame = new BowlingGame($rolls);
+
+        $bowlingGame->calculateScore();
+
+        $this->assertEquals(300, $bowlingGame->score());
     }
 }
