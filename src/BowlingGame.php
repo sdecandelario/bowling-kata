@@ -37,7 +37,8 @@ class BowlingGame
         $totalRolls = count($this->rolls);
 
         foreach ($this->rolls as $turn => $roll) {
-            if ($additionalTurns && $turn < ($totalRolls - $additionalTurns)) {
+
+            if ($turn > 0 && $additionalTurns && $turn < ($totalRolls - $additionalTurns)) {
                 $this->score += $roll;
                 $additionalTurns--;
             }
@@ -50,7 +51,7 @@ class BowlingGame
                 $additionalTurns = 2;
             }
 
-            if (($roll == 10) || $launch == 2) {
+            if ($roll == 10 || $launch == 2) {
                 $launch = 0;
             }
 
