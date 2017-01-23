@@ -20,7 +20,7 @@ class BowlingGameTest extends TestCase
 
         $this->assertEquals(0, $bowlingGame->score());
     }
-//
+
     public function testAGutterGame()
     {
         $rolls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -31,7 +31,7 @@ class BowlingGameTest extends TestCase
 
         $this->assertEquals(0, $bowlingGame->score());
     }
-//
+
     public function testANoSpareNoStrikesGame()
     {
         $rolls = [1, 6, 4, 5, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -42,7 +42,7 @@ class BowlingGameTest extends TestCase
 
         $this->assertEquals(20, $bowlingGame->score());
     }
-//
+
     public function testGameWithSpares()
     {
         $rolls = [4, 6, 4, 5, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -75,7 +75,7 @@ class BowlingGameTest extends TestCase
 
         $this->assertEquals(22, $bowlingGame->score());
     }
-//
+
     public function testGameWithStrikeIn10thFrame()
     {
 

@@ -38,8 +38,13 @@ class BowlingGame
 
         foreach ($this->rolls as $turn => $roll) {
 
-            if ($turn > 0 && $additionalTurns && $turn < ($totalRolls - $additionalTurns)) {
-                $this->score += $roll;
+            if ($additionalTurns && $turn < ($totalRolls - $additionalTurns)) {
+                $rounds = ($turn == 1) ? 1 : $additionalTurns;
+
+                for ($i = 0; $i < $rounds; $i++) {
+                    $this->score += $roll;
+                }
+
                 $additionalTurns--;
             }
 
