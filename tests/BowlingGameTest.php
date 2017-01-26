@@ -78,7 +78,6 @@ class BowlingGameTest extends TestCase
 
     public function testGameWithStrikeIn10thFrame()
     {
-
         $rolls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 4, 2, 10, 2, 3];
 
         $bowlingGame = new BowlingGame($rolls);
@@ -86,6 +85,17 @@ class BowlingGameTest extends TestCase
         $bowlingGame->calculateScore();
 
         $this->assertEquals(25, $bowlingGame->score());
+    }
+
+    public function testGameWithAllSpares()
+    {
+        $rolls = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
+
+        $bowlingGame = new BowlingGame($rolls);
+
+        $bowlingGame->calculateScore();
+
+        $this->assertEquals(150, $bowlingGame->score());
     }
 
     public function testAPrefectGame()
